@@ -1,12 +1,15 @@
-spam-shall-not-pass
+#spam-shall-not-pass
 ===================
 
 for replace captcha
 
 
-use:
+### [demo](http://justillusion.ru/demo/spam-shall-not-pass/)
 
-$('element').myRobot();
+
+### useage:
+
+``$('element').myRobot();``
 
 options:
 - method : get
