@@ -3,7 +3,6 @@
     var settings = $.extend(true,{},{
       //'element' : '.antispam',
       //method can be 'get' or 'inherit' from form method
-      'method' : 'get',
       'var' : 'robot',
       'value': 'no',
       'templates' : {
