@@ -39,50 +39,22 @@
         //calculate sizes
         var successSize = $('.'+cSucces).outerWidth(true) + $('.'+cBetween).outerWidth(true);
         var wrongSize = $('.'+cWrong).outerWidth(true) + $('.'+cBetween).outerWidth(true);
-      console.log('success:',successSize, 'wrong',wrongSize);
         //set width for scope
         asEL.width(asEL.outerWidth());
         //set wrong size as default + offset left
         $(self).width(wrongSize).addClass('wrong');
         $(asEL).css('margin-left', -1*$('.'+cSucces).outerWidth(true)+'px');
-        //console.log(-1*$('.'+cSucces).outerWidth(true)+'px');
-        //hovers
+        //actions
         $(self).on({
-         /* mouseenter: function () {
-              //stuff to do on mouse enter
-              if($(this).hasClass('wrong')){
-                $(this).width(successSize);
-                $(asEL).css('margin-left', '0px');
-                //$(asEL).stop().animate({marginLeft : '+='+$('.'+cWrong).outerWidth(true)+'px'},200);
-              }
-              else{
-                $(this).width(wrongSize);
-                $(asEL).css('margin-left', -1*$('.'+cSucces).outerWidth(true)+'px');
-              }
-          },
-          mouseleave: function () {
-              //stuff to do on mouse leave
-              if($(this).hasClass('wrong')){
-                $(this).width(wrongSize);
-                $(asEL).css('margin-left', -1*$('.'+cSucces).outerWidth(true)+'px');
-              }
-              else{
-                $(this).width(successSize);
-                $(asEL).css('margin-left', '0px');
-              }
-          },*/
           click: function () {
             if($(this).hasClass('wrong')){
                 $(this).width(successSize);
-              console.log(successSize);
                 $(asEL).css('margin-left', '0px');
                 $(this).removeClass('wrong');
                 humanize(asEL.parents('form'));
-                //$(asEL).stop().animate({marginLeft : '+='+$('.'+cWrong).outerWidth(true)+'px'},200);
               }
               else{
                 $(this).width(wrongSize);
-              console.log(wrongSize);
                 $(asEL).css('margin-left', -1*$('.'+cSucces).outerWidth(true)+'px');
                 $(this).addClass('wrong');
                 humanize(asEL.parents('form'),true);
@@ -93,55 +65,17 @@
       });
     //dunno why named this function
     function humanize(form,clear){
-      if (clear == true)
-        form.attr('action','');
+      //add field to form
+      if (clear == true){
+        form.find('input[name="'+settings.var+'"]').remove();
+      }
       else
-        form.attr('action',updateURLParameter(form.attr('action'),settings.var,settings.value));
+        $('<input>').attr({'name' :settings.var,
+                          'value' :settings.value,
+                          'type' : 'hidden'
+                        }).appendTo(form);
     }
-    //copy this code from stackoverflow answer
-    function updateURLParameter(url, param, paramVal){
-        var TheAnchor = null;
-        var newAdditionalURL = "";
-        var tempArray = url.split("?");
-        var baseURL = tempArray[0];
-        var additionalURL = tempArray[1];
-        var temp = "";
 
-        if (additionalURL)
-        {
-            var tmpAnchor = additionalURL.split("#");
-            var TheParams = tmpAnchor[0];
-                TheAnchor = tmpAnchor[1];
-            if(TheAnchor)
-                additionalURL = TheParams;
-
-            tempArray = additionalURL.split("&");
-
-            for (i=0; i<tempArray.length; i++)
-            {
-                if(tempArray[i].split('=')[0] != param)
-                {
-                    newAdditionalURL += temp + tempArray[i];
-                    temp = "&";
-                }
-            }
-        }
-        else
-        {
-            var tmpAnchor = baseURL.split("#");
-            var TheParams = tmpAnchor[0];
-                TheAnchor  = tmpAnchor[1];
-
-            if(TheParams)
-                baseURL = TheParams;
-        }
-
-        if(TheAnchor)
-            paramVal += "#" + TheAnchor;
-
-        var rows_txt = temp + "" + param + "=" + paramVal;
-        return baseURL + "?" + newAdditionalURL + rows_txt;
-    }
     //generate random key
     function getid(){
       var text = "";
